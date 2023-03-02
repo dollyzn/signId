@@ -1,0 +1,160 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+body,
+html {
+  background-color: #fafafa;
+  height: 100%;
+  font-family: Poppins-Regular, sans-serif;
+}
+
+.header {
+  padding: 8px;
+  background: linear-gradient(to right, #050505, #c90003);
+  color: white;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.header a {
+  margin-left: auto;
+  fill: #fff;
+}
+
+#canvas {
+  width: "100%";
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.rotateimg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.xwork {
+  padding: 30px;
+  border-radius: 10px;
+  font-size: 23px;
+  width: 200px;
+}
+
+.data {
+  padding: 30px;
+  border-radius: 10px;
+  font-size: 23px;
+  width: 320px;
+}
+
+.flexbox {
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -50px;
+}
+
+.flexinit {
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: -50px;
+}
+
+.arrowbtn {
+  background-color: #b1b1b1e3;
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 50%;
+  margin-right: 30px;
+  margin-left: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.leftbtn {
+  margin-left: 10px;
+  margin-right: -10px;
+}
+
+.buttoninit {
+  align-items: center;
+  border: 5px solid #a80000;
+  background-color: transparent;
+  padding: 5px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 30px;
+  font-size: 17pt;
+  font-weight: bold;
+  border-radius: 100px;
+  width: 200px;
+  height: 100px;
+  color: black;
+}
+
+.buttoninit:hover {
+  color: #ffffff;
+  background-color: #a80000;
+}
+
+#canvas {
+  margin-top: 10px;
+  border: 2px solid black;
+}
+
+.flexboxcanva {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: -30px;
+}
+
+.btncanva {
+  align-items: center;
+  color: #ffffff;
+  background-color: #00a884;
+  border: none;
+  padding: 5px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 30px;
+  font-size: 17pt;
+  font-weight: bold;
+  border-radius: 100px;
+  width: 200px;
+  height: 50px;
+}
+
+#clear {
+  background-color: #a80000;
+}
+
+.canvabtns {
+  margin-top: -120px;
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}

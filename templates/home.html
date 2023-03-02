@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" type="text/css" href="css/home.css" />
+    <link rel="manifest" href="./js/manifest.json" />
+
+    <title>Document</title>
+  </head>
+  <img
+    class="rotateimg"
+    id="rotateimg"
+    src="https://cdn-icons-png.flaticon.com/512/35/35432.png"
+    width="200px"
+  />
+  <div id="ortctrl" onload="checkOrientation()">
+    <div class="header">
+      <div class="logo">
+        <img src="./images/icons/logo.png" width="100px" draggable="false" />
+      </div>
+      <a href="./php/logout.php">
+        <div class="icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="35"
+            viewBox="0 96 960 960"
+            width="35"
+          >
+            <path
+              d="M180 936q-24 0-42-18t-18-42V276q0-24 18-42t42-18h291v60H180v600h291v60H180Zm486-185-43-43 102-102H375v-60h348L621 444l43-43 176 176-174 174Z"
+            />
+          </svg>
+        </div>
+      </a>
+    </div>
+    <body>
+      <div id="container">
+        <div class="flexinit">
+          <div class="entrega">
+            <button class="buttoninit" id="entrega">Entrega de Exame</button>
+          </div>
+          <div class="busca">
+            <button class="buttoninit" id="busca">Buscar</button>
+          </div>
+        </div>
+      </div>
+      <form>
+        <div id="container1">
+          <div class="flexbox">
+            <div class="arrowbtn" id="lft1">
+              <svg
+                class="leftbtn"
+                xmlns="http://www.w3.org/2000/svg"
+                height="48"
+                viewBox="0 96 960 960"
+                width="48"
+              >
+                <path d="M400 976 0 576l400-400 56 57-343 343 343 343-56 57Z" />
+              </svg>
+            </div>
+            <div class="form">
+              <div class="inputs">
+                <h1>Número do paciente</h1>
+                <br /><br />
+                <input class="xwork" type="number" name="xwork" />
+              </div>
+            </div>
+            <div class="arrowbtn" id="rgt1">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="48"
+                viewBox="0 96 960 960"
+                width="48"
+              >
+                <path
+                  d="m304 974-56-57 343-343-343-343 56-57 400 400-400 400Z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div id="container2">
+          <div class="flexbox">
+            <div class="arrowbtn" id="lft2">
+              <svg
+                class="leftbtn"
+                xmlns="http://www.w3.org/2000/svg"
+                height="48"
+                viewBox="0 96 960 960"
+                width="48"
+              >
+                <path d="M400 976 0 576l400-400 56 57-343 343 343 343-56 57Z" />
+              </svg>
+            </div>
+            <div class="form">
+              <div class="inputs">
+                <h1>Data</h1>
+                <br /><br />
+                <input class="data" type="datetime-local" name="date" />
+              </div>
+            </div>
+            <div class="arrowbtn" id="rgt2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="48"
+                viewBox="0 96 960 960"
+                width="48"
+              >
+                <path
+                  d="m304 974-56-57 343-343-343-343 56-57 400 400-400 400Z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div id="container3">
+          <div class="flexbox">
+            <div class="arrowbtn" id="lft3">
+              <svg
+                class="leftbtn"
+                xmlns="http://www.w3.org/2000/svg"
+                height="48"
+                viewBox="0 96 960 960"
+                width="48"
+              >
+                <path d="M400 976 0 576l400-400 56 57-343 343 343 343-56 57Z" />
+              </svg>
+            </div>
+            <div class="form">
+              <div class="inputs">
+                <h1>Atendente</h1>
+                <br /><br />
+                <input class="xwork" type="text" name="atendant" />
+              </div>
+            </div>
+            <div class="arrowbtn" id="rgt3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="48"
+                viewBox="0 96 960 960"
+                width="48"
+              >
+                <path
+                  d="m304 974-56-57 343-343-343-343 56-57 400 400-400 400Z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div id="container4">
+          <div class="flexboxcanva">
+            <div>
+              <canvas id="canvas"></canvas>
+              <input type="hidden" name="signature" id="signature" />
+            </div>
+            <div class="canvabtns">
+              <button class="btncanva" id="clear">Limpar</button>
+              <button class="btncanva" id="submitcanva" type="submit">
+                Enviar
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <script src="./js/script.js"></script>
+    </body>
+  </div>
+</html>

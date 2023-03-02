@@ -1,12 +1,12 @@
 <?php
-include("./includes/connection.php");
+include("connection.php");
 
 // Iniciar sessão
 session_start();
 
 // Verificar se o usuário já está logado
 if (isset($_SESSION['unityname'])) {
-    header('Location: home.php');
+    header('Location: ../home.php');
     exit();
 }
 
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->rowCount() === 1) {
         // Credenciais válidas, criar uma sessão
         $_SESSION['unityname'] = $unityname;
-        header('Location: home.php');
+        header('Location: ../home.php');
         exit();
     } else {
         // Credenciais inválidas, exibir mensagem de erro
@@ -35,9 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Fechar a conexão com o banco de dados
     $conn = null;
+    header('Location: ../index.php');
 }
 
-// Carregar o template e renderizá-lo
-require_once 'functions.php';
-render_template('index.php', ['error' => isset($error) ? $error : null]);
 ?>
