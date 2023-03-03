@@ -7,7 +7,7 @@ if (!isset($_SESSION['unitname'])) {
     exit();
 }
 
-$query = $conn->query("SELECT id, name FROM Whatsapps ORDER BY id ASC");
+$query = $conn->query("SELECT id, name FROM Users ORDER BY name ASC");
 $registros = $query->fetchAll(PDO::FETCH_ASSOC);
 
 ob_start();
