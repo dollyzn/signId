@@ -323,6 +323,7 @@ $("#btnProcurar").on("click", function (e) {
         }).showToast();
       } else {
         const tbody = $(".tableSearch tbody");
+        console.log(resJSON);
         $.each(resJSON, function (index, item) {
           const row = $("<tr>");
           $("<td>").text(item.unit).appendTo(row);
