@@ -306,11 +306,21 @@ $("#searchInput").on("keyup", function (e) {
         } else {
           const tbody = $(".tableSearch tbody");
           $.each(resJSON, function (index, item) {
+            let data = new Date(item.date + " UTC");
+
+            let day = data.getDate().toString().padStart(2, "0");
+            let month = (data.getMonth() + 1).toString().padStart(2, "0");
+            let year = data.getFullYear();
+            let hour = data.getHours().toString().padStart(2, "0");
+            let minute = data.getMinutes().toString().padStart(2, "0");
+
+            let formatedDate = `${day}/${month}/${year} às ${hour}:${minute}`;
+
             const row = $("<tr>");
             $("<td>").text(item.unit).appendTo(row);
             $("<td>").text(item.xworkId).appendTo(row);
             $("<td>").text(item.atendant).appendTo(row);
-            $("<td>").text(item.date).appendTo(row);
+            $("<td>").text(formatedDate).appendTo(row);
             $("<td>")
               .html(
                 `<div data-href="${item.signature}" class="image-link" id="searchSignature" data-type="image/png">Visualizar</div>`
@@ -351,11 +361,21 @@ $("#btnProcurar").on("click", function (e) {
       } else {
         const tbody = $(".tableSearch tbody");
         $.each(resJSON, function (index, item) {
+          let data = new Date(item.date + " UTC");
+
+          let day = data.getDate().toString().padStart(2, "0");
+          let month = (data.getMonth() + 1).toString().padStart(2, "0");
+          let year = data.getFullYear();
+          let hour = data.getHours().toString().padStart(2, "0");
+          let minute = data.getMinutes().toString().padStart(2, "0");
+
+          let formatedDate = `${day}/${month}/${year} às ${hour}:${minute}`;
+
           const row = $("<tr>");
           $("<td>").text(item.unit).appendTo(row);
           $("<td>").text(item.xworkId).appendTo(row);
           $("<td>").text(item.atendant).appendTo(row);
-          $("<td>").text(item.date).appendTo(row);
+          $("<td>").text(formatedDate).appendTo(row);
           $("<td>")
             .html(
               `<div data-href="${item.signature}" class="image-link" id="searchSignature" data-type="image/png">Visualizar</div>`
