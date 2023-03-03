@@ -6,6 +6,11 @@
 
     <link rel="stylesheet" type="text/css" href="css/home.css" />
     <link rel="manifest" href="./js/manifest.json" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
 
     <title>Document</title>
   </head>
@@ -15,7 +20,7 @@
     src="https://cdn-icons-png.flaticon.com/512/35/35432.png"
     width="200px"
   />
-  <div id="ortctrl" onload="checkOrientation()">
+  <div id="ortctrl">
     <div class="header">
       <div class="logo">
         <img src="./images/icons/logo.png" width="100px" draggable="false" />
@@ -36,17 +41,42 @@
       </a>
     </div>
     <body>
+      <div id="modalBuscar">
+        <div class="table-container">
+          <table class="tableSearch">
+            <thead>
+              <tr>
+                <th>Unidade</th>
+                <th>Número do exame</th>
+                <th>Atendente</th>
+                <th>Assinatura</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div>
+          <div>
+            <label for="searchInput" id="labelsearch">Número do exame</label>
+            <input type="number" id="searchInput" />
+          </div>
+          <button id="btnProcurar">Procurar</button>
+          <button id="btnCancelar">Voltar</button>
+        </div>
+      </div>
       <div id="container">
         <div class="flexinit">
           <div class="entrega">
-            <button class="buttoninit" id="entrega">Entrega de Exame</button>
+            <button class="buttoninit" id="entrega">
+              Cadastrar Assinatura
+            </button>
           </div>
           <div class="busca">
             <button class="buttoninit" id="busca">Buscar</button>
           </div>
         </div>
       </div>
-      <form>
+      <form id="deliveredForm">
         <div id="container1">
           <div class="flexbox">
             <div class="arrowbtn" id="lft1">
@@ -62,9 +92,15 @@
             </div>
             <div class="form">
               <div class="inputs">
-                <h1>Número do paciente</h1>
+                <h1>Número do exame</h1>
                 <br /><br />
-                <input class="xwork" type="number" name="xwork" />
+                <input
+                  class="xwork"
+                  type="number"
+                  name="xworkId"
+                  data-nome="Número do Exame"
+                  jsrequired
+                />
               </div>
             </div>
             <div class="arrowbtn" id="rgt1">
@@ -98,7 +134,13 @@
               <div class="inputs">
                 <h1>Data</h1>
                 <br /><br />
-                <input class="data" type="datetime-local" name="date" />
+                <input
+                  class="data"
+                  type="datetime-local"
+                  name="date"
+                  data-nome="Data de entrega"
+                  jsrequired
+                />
               </div>
             </div>
             <div class="arrowbtn" id="rgt2">
@@ -132,7 +174,14 @@
               <div class="inputs">
                 <h1>Atendente</h1>
                 <br /><br />
-                <input class="xwork" type="text" name="atendant" />
+                <select
+                  id="options"
+                  name="atendant"
+                  data-nome="Nome do atendente"
+                  jsrequired
+                >
+                  <option value="">Selecione</option>
+                </select>
               </div>
             </div>
             <div class="arrowbtn" id="rgt3">
@@ -153,10 +202,19 @@
           <div class="flexboxcanva">
             <div>
               <canvas id="canvas"></canvas>
-              <input type="hidden" name="signature" id="signature" />
+              <input type="hidden" name="signature" id="signature" jsrequired />
+              <input
+                type="hidden"
+                name="unit"
+                id="unit"
+                value="{{unit}}"
+                data-nome="Assinatura"
+                jsrequired
+              />
             </div>
             <div class="canvabtns">
               <button class="btncanva" id="clear">Limpar</button>
+              <button class="btncanva" id="cancel">Voltar</button>
               <button class="btncanva" id="submitcanva" type="submit">
                 Enviar
               </button>
@@ -164,6 +222,14 @@
           </div>
         </div>
       </form>
+      <script>
+        users = `{{registros}}`;
+      </script>
+      <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+      <script
+        type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/toastify-js"
+      ></script>
       <script src="./js/script.js"></script>
     </body>
   </div>

@@ -3,7 +3,7 @@
 $host = 'localhost';
 $user = 'root';
 $pass = '';
-$db = 'signId';
+$db = 'whaticket';
 
 try{
     $conn = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
@@ -13,5 +13,4 @@ try{
     echo $e->getMessage();
     exit;
 }
-
 ?>

@@ -1,21 +1,18 @@
 <?php
 session_start();
 
-// verifica se o usuário está logado
-if (isset($_SESSION['unityname'])) {
+if (isset($_SESSION['unitname'])) {
     header('Location: home.php');
     exit();
 }
 
-// abre o buffer de saída
 ob_start();
 
-// lê o conteúdo da página protegida
 $page_content = file_get_contents('templates/index.html');
+$page_content = str_replace("{{error}}", isset($_SESSION['error']) ? $_SESSION['error'] : "Inicie a sessão", $page_content);
 
-// imprime o conteúdo na tela
+
 echo $page_content;
 
-// fecha o buffer de saída e imprime o conteúdo na tela
 ob_end_flush();
 ?>

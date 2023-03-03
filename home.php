@@ -1,21 +1,22 @@
 <?php
+include("./php/whaticket.php");
 session_start();
 
-// verifica se o usuário está logado
-if (!isset($_SESSION['unityname'])) {
+if (!isset($_SESSION['unitname'])) {
     header('Location: index.php');
     exit();
 }
 
-// abre o buffer de saída
+$query = $conn->query("SELECT id, name FROM Whatsapps ORDER BY id ASC");
+$registros = $query->fetchAll(PDO::FETCH_ASSOC);
+
 ob_start();
 
-// lê o conteúdo da página protegida
 $page_content = file_get_contents('./templates/home.html');
+$page_content = str_replace("{{registros}}", json_encode($registros), $page_content);
+$page_content = str_replace("{{unit}}", $_SESSION["unitname"], $page_content);
 
-// imprime o conteúdo na tela
 echo $page_content;
 
-// fecha o buffer de saída e imprime o conteúdo na tela
 ob_end_flush();
 ?>

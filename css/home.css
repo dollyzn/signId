@@ -97,23 +97,18 @@ html {
 
 .buttoninit {
   align-items: center;
-  border: 5px solid #a80000;
-  background-color: transparent;
+  border: none;
+  background-color: #9e0003;
+  color: #ffffff;
   padding: 5px;
   display: block;
   margin: 0 auto;
   margin-top: 30px;
   font-size: 17pt;
   font-weight: bold;
-  border-radius: 100px;
+  border-radius: 10px;
   width: 200px;
   height: 100px;
-  color: black;
-}
-
-.buttoninit:hover {
-  color: #ffffff;
-  background-color: #a80000;
 }
 
 #canvas {
@@ -147,7 +142,11 @@ html {
 }
 
 #clear {
-  background-color: #a80000;
+  background-color: #6e6e6e;
+}
+
+#cancel {
+  background-color: #963434;
 }
 
 .canvabtns {
@@ -157,4 +156,97 @@ html {
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+}
+
+#options {
+  font-size: 23px;
+  padding: 30px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.table-container {
+  max-height: calc(100vh - 150px);
+  width: 100vw;
+  text-align: center;
+  overflow: auto;
+}
+
+#modalBuscar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0 auto;
+}
+
+#modalBuscar > div:last-child {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.tableSearch {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableSearch th,
+.tableSearch td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.tableSearch th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+}
+
+.tableSearch tr:hover {
+  background-color: #f5f5f5;
+}
+
+#searchInput {
+  width: 99%;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  margin-left: 1px;
+}
+#labelsearch {
+  margin-bottom: 5px;
+}
+
+#btnProcurar {
+  color: #ffffff;
+  background-color: #004ea8;
+  border: none;
+  padding: 5px;
+  font-size: 10pt;
+  font-weight: bold;
+  border-radius: 100px;
+  width: 100px;
+  height: 25px;
+}
+#btnCancelar {
+  color: #ffffff;
+  background-color: #777d85;
+  border: none;
+  padding: 5px;
+  font-size: 10pt;
+  font-weight: bold;
+  border-radius: 100px;
+  width: 100px;
+  height: 25px;
+}
+
+.image-link {
+  display: inline-block;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
 }
