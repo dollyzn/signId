@@ -116,94 +116,86 @@ function checkOrientation() {
 window.addEventListener("orientationchange", checkOrientation, false);
 window.addEventListener("resize", checkOrientation, false);
 
-window.addEventListener(
-  "load",
-  function () {
-    checkOrientation();
-    document.getElementById("container4").style.display = "none";
-    document.getElementById("container3").style.display = "none";
-    document.getElementById("container2").style.display = "none";
-    document.getElementById("container1").style.display = "none";
-    document.getElementById("modalBuscar").style.display = "none";
-  },
-  false
-);
+$(document).ready(function () {
+  checkOrientation();
+  $(
+    "#container4, #container3, #container2, #container1, #modalBuscar"
+  ).addClass("hide");
 
-document.getElementById("entrega").addEventListener("click", (e) => {
-  document.getElementById("container4").style.display = "none";
-  document.getElementById("container3").style.display = "none";
-  document.getElementById("container2").style.display = "none";
-  document.getElementById("container1").style.display = "block";
-  document.getElementById("container").style.display = "none";
-  document.getElementById("modalBuscar").style.display = "none";
-});
+  $("#entrega").click(function () {
+    $(
+      "#container4, #container3, #container2, #container1, #modalBuscar"
+    ).addClass("hide");
+    $("#container1").removeClass("hide");
+    $("#container").addClass("hide");
+  });
 
-document.getElementById("rgt1").addEventListener("click", (e) => {
-  document.getElementById("container4").style.display = "none";
-  document.getElementById("container3").style.display = "none";
-  document.getElementById("container2").style.display = "block";
-  document.getElementById("container1").style.display = "none";
-  document.getElementById("container").style.display = "none";
-  document.getElementById("modalBuscar").style.display = "none";
+  $(".xwork").on("keyup", function (e) {
+    if (e.which === 13) {
+      $(
+        "#container4, #container3, #container2, #container1, #modalBuscar"
+      ).addClass("hide");
+      $("#container2").removeClass("hide");
 
-  let date = new Date();
-  date.setHours(date.getHours() - 3);
-  document.querySelector(".data").value = date.toISOString().substring(0, 16);
-});
+      let date = new Date();
+      date.setHours(date.getHours() - 3);
+      $(".data").val(date.toISOString().substring(0, 16));
+    }
+  });
 
-document.getElementById("rgt2").addEventListener("click", (e) => {
-  document.getElementById("container4").style.display = "none";
-  document.getElementById("container3").style.display = "block";
-  document.getElementById("container2").style.display = "none";
-  document.getElementById("container1").style.display = "none";
-  document.getElementById("container").style.display = "none";
-  document.getElementById("modalBuscar").style.display = "none";
-});
+  $("#rgt1").click(function () {
+    $(
+      "#container4, #container3, #container2, #container1, #modalBuscar"
+    ).addClass("hide");
+    $("#container2").removeClass("hide");
 
-document.getElementById("rgt3").addEventListener("click", (e) => {
-  document.getElementById("container4").style.display = "block";
-  document.getElementById("container3").style.display = "none";
-  document.getElementById("container2").style.display = "none";
-  document.getElementById("container1").style.display = "none";
-  document.getElementById("container").style.display = "none";
-  document.getElementById("modalBuscar").style.display = "none";
-});
+    let date = new Date();
+    date.setHours(date.getHours() - 3);
+    $(".data").val(date.toISOString().substring(0, 16));
+  });
 
-document.getElementById("lft1").addEventListener("click", (e) => {
-  document.getElementById("container4").style.display = "none";
-  document.getElementById("container3").style.display = "none";
-  document.getElementById("container2").style.display = "none";
-  document.getElementById("container1").style.display = "none";
-  document.getElementById("container").style.display = "block";
-  document.getElementById("modalBuscar").style.display = "none";
-});
+  $("#rgt2").click(function () {
+    $(
+      "#container4, #container3, #container2, #container1, #modalBuscar"
+    ).addClass("hide");
+    $("#container3").removeClass("hide");
+  });
 
-document.getElementById("lft2").addEventListener("click", (e) => {
-  document.getElementById("container4").style.display = "none";
-  document.getElementById("container3").style.display = "none";
-  document.getElementById("container2").style.display = "none";
-  document.getElementById("container1").style.display = "block";
-  document.getElementById("container").style.display = "none";
-  document.getElementById("modalBuscar").style.display = "none";
-});
+  $("#rgt3").click(function () {
+    $(
+      "#container4, #container3, #container2, #container1, #modalBuscar"
+    ).addClass("hide");
+    $("#container4").removeClass("hide");
+  });
 
-document.getElementById("lft3").addEventListener("click", (e) => {
-  document.getElementById("container4").style.display = "none";
-  document.getElementById("container3").style.display = "none";
-  document.getElementById("container2").style.display = "block";
-  document.getElementById("container1").style.display = "none";
-  document.getElementById("container").style.display = "none";
-  document.getElementById("modalBuscar").style.display = "none";
-});
+  $("#lft1").click(function () {
+    $(
+      "#container4, #container3, #container2, #container1, #modalBuscar"
+    ).addClass("hide");
+    $("#container").removeClass("hide");
+  });
 
-document.getElementById("cancel").addEventListener("click", (e) => {
-  e.preventDefault();
-  document.getElementById("container4").style.display = "none";
-  document.getElementById("container3").style.display = "block";
-  document.getElementById("container2").style.display = "none";
-  document.getElementById("container1").style.display = "none";
-  document.getElementById("container").style.display = "none";
-  document.getElementById("modalBuscar").style.display = "none";
+  $("#lft2").click(function () {
+    $(
+      "#container4, #container3, #container2, #container1, #modalBuscar"
+    ).addClass("hide");
+    $("#container1").removeClass("hide");
+  });
+
+  $("#lft3").click(function () {
+    $(
+      "#container4, #container3, #container2, #container1, #modalBuscar"
+    ).addClass("hide");
+    $("#container2").removeClass("hide");
+  });
+
+  $("#cancel").click(function (e) {
+    e.preventDefault();
+    $(
+      "#container4, #container3, #container2, #container1, #modalBuscar"
+    ).addClass("hide");
+    $("#container3").removeClass("hide");
+  });
 });
 
 $("#deliveredForm").on("submit", function (event) {
@@ -254,12 +246,9 @@ function enviarFormulario() {
             },
           }).showToast();
 
-          document.getElementById("container4").style.display = "none";
-          document.getElementById("container3").style.display = "none";
-          document.getElementById("container2").style.display = "none";
-          document.getElementById("container1").style.display = "none";
-          document.getElementById("container").style.display = "block";
-          document.getElementById("modalBuscar").style.display = "none";
+          $("#container4").addClass("hide");
+          $("#container").removeClass("hide");
+
           break;
         case false:
           Toastify({
@@ -281,23 +270,61 @@ function enviarFormulario() {
 }
 
 $("#busca").on("click", function () {
-  document.getElementById("container4").style.display = "none";
-  document.getElementById("container3").style.display = "none";
-  document.getElementById("container2").style.display = "none";
-  document.getElementById("container1").style.display = "none";
-  document.getElementById("container").style.display = "none";
-  document.getElementById("modalBuscar").style.display = "block";
+  $("#container").addClass("hide");
+  $("#modalBuscar").removeClass("hide");
 });
 
 $("#btnCancelar").on("click", function () {
-  document.getElementById("container4").style.display = "none";
-  document.getElementById("container3").style.display = "none";
-  document.getElementById("container2").style.display = "none";
-  document.getElementById("container1").style.display = "none";
-  document.getElementById("container").style.display = "block";
-  document.getElementById("modalBuscar").style.display = "none";
+  $("#modalBuscar").addClass("hide");
+  $("#container").removeClass("hide");
   $(".tableSearch tbody").empty();
   $("#searchInput").val("");
+});
+
+$("#searchInput").on("keyup", function (e) {
+  if (e.which === 13) {
+    e.preventDefault();
+    $(".tableSearch tbody").empty();
+    const searchTerm = $("#searchInput").val().trim();
+
+    var dados = `xworkId=${searchTerm}`;
+
+    $.ajax({
+      url: "./php/search.php",
+      type: "POST",
+      data: dados,
+      success: function (resposta) {
+        let resJSON = JSON.parse(resposta);
+        if (resJSON.length === 0) {
+          Toastify({
+            text: "Nenhum resultado encontrado",
+            duration: 2000,
+            style: {
+              background: "#3250a8",
+            },
+          }).showToast();
+        } else {
+          const tbody = $(".tableSearch tbody");
+          $.each(resJSON, function (index, item) {
+            const row = $("<tr>");
+            $("<td>").text(item.unit).appendTo(row);
+            $("<td>").text(item.xworkId).appendTo(row);
+            $("<td>").text(item.atendant).appendTo(row);
+            $("<td>").text(item.date).appendTo(row);
+            $("<td>")
+              .html(
+                `<div data-href="${item.signature}" class="image-link" id="searchSignature" data-type="image/png">Visualizar</div>`
+              )
+              .appendTo(row);
+            row.appendTo(tbody);
+          });
+        }
+      },
+      error: function (erro) {
+        console.error(erro);
+      },
+    });
+  }
 });
 
 $("#btnProcurar").on("click", function (e) {

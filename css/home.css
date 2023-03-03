@@ -250,3 +250,7 @@ html {
   text-decoration: underline;
   cursor: pointer;
 }
+
+.hide {
+  display: none !important;
+}
