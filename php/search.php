@@ -3,7 +3,7 @@ include("connection.php");
 
 $xworkId = $_POST['xworkId'];
 
-$stmt = $conn->prepare("SELECT unit, xworkId, atendant, signature FROM delivered WHERE xworkId = :xworkId");
+$stmt = $conn->prepare("SELECT unit, xworkId, atendant, date, signature FROM delivered WHERE xworkId = :xworkId");
 $stmt->bindParam(':xworkId', $xworkId);
 $stmt->execute();
 

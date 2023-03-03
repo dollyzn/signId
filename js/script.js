@@ -328,6 +328,7 @@ $("#btnProcurar").on("click", function (e) {
           $("<td>").text(item.unit).appendTo(row);
           $("<td>").text(item.xworkId).appendTo(row);
           $("<td>").text(item.atendant).appendTo(row);
+          $("<td>").text(item.date).appendTo(row);
           $("<td>")
             .html(
               `<div data-href="${item.signature}" class="image-link" id="searchSignature" data-type="image/png">Visualizar</div>`
