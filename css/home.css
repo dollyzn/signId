@@ -3,6 +3,11 @@
   src: url("../fonts/poppins/Poppins-Regular.ttf");
 }
 
+@font-face {
+  font-family: Poppins-Bold;
+  src: url("../fonts/poppins/Poppins-Bold.ttf");
+}
+
 * {
   margin: 0px;
   padding: 0px;
@@ -105,12 +110,11 @@ html {
   border: none;
   background-color: #9e0003;
   color: #ffffff;
-  padding: 5px;
   display: block;
   margin: 0 auto;
   margin-top: 30px;
   font-size: 17pt;
-  font-weight: bold;
+  font-family: Poppins-Bold;
   border-radius: 10px;
   width: 200px;
   height: 100px;
@@ -140,7 +144,7 @@ html {
   margin: 0 auto;
   margin-top: 30px;
   font-size: 17pt;
-  font-weight: bold;
+  font-family: Poppins-Bold;
   border-radius: 100px;
   width: 200px;
   height: 50px;
@@ -207,7 +211,7 @@ html {
 .tableSearch th {
   background-color: #f2f2f2;
   color: #333;
-  font-weight: bold;
+  font-family: Poppins-Bold;
 }
 
 .tableSearch tr:hover {
@@ -230,9 +234,8 @@ html {
   color: #ffffff;
   background-color: #004ea8;
   border: none;
-  padding: 5px;
   font-size: 10pt;
-  font-weight: bold;
+  font-family: Poppins-Bold;
   border-radius: 100px;
   width: 100px;
   height: 25px;
@@ -241,9 +244,8 @@ html {
   color: #ffffff;
   background-color: #777d85;
   border: none;
-  padding: 5px;
   font-size: 10pt;
-  font-weight: bold;
+  font-family: Poppins-Bold;
   border-radius: 100px;
   width: 100px;
   height: 25px;
