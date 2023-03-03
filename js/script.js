@@ -206,7 +206,6 @@ $("#deliveredForm").on("submit", function (event) {
   inputs.each(function () {
     if ($(this).val().trim() === "") {
       if ($(this).attr("data-nome") != undefined) {
-        console.log($(this).attr("data-nome"));
         names += `${$(this).attr("data-nome")}, `;
       }
       valid = false;
@@ -216,7 +215,6 @@ $("#deliveredForm").on("submit", function (event) {
     event.preventDefault;
     enviarFormulario();
   } else {
-    console.log("ue");
     names = names.replace(/,\s*$/, "");
     Toastify({
       text: `Preencha todos os campos necessários.\n(${names})`,
@@ -248,6 +246,8 @@ function enviarFormulario() {
 
           $("#container4").addClass("hide");
           $("#container").removeClass("hide");
+          document.getElementById("deliveredForm").reset();
+          canvas.width = canvas.width;
 
           break;
         case false:
@@ -260,8 +260,6 @@ function enviarFormulario() {
           }).showToast();
           break;
       }
-
-      console.log(resJSON);
     },
     error: function (erro) {
       console.error(erro);
