@@ -146,9 +146,9 @@ document.getElementById("rgt1").addEventListener("click", (e) => {
   document.getElementById("container").style.display = "none";
   document.getElementById("modalBuscar").style.display = "none";
 
-  document.querySelector(".data").value = new Date()
-    .toISOString()
-    .substring(0, 16);
+  let date = new Date();
+  date.setHours(date.getHours() - 3);
+  document.querySelector(".data").value = date.toISOString().substring(0, 16);
 });
 
 document.getElementById("rgt2").addEventListener("click", (e) => {
@@ -323,7 +323,6 @@ $("#btnProcurar").on("click", function (e) {
         }).showToast();
       } else {
         const tbody = $(".tableSearch tbody");
-        console.log(resJSON);
         $.each(resJSON, function (index, item) {
           const row = $("<tr>");
           $("<td>").text(item.unit).appendTo(row);
