@@ -2,7 +2,7 @@
   "name": "Cadastro de Assinatura",
   "short_name": "SignApp",
   "start_url": "../index.php",
-  "display": "standalone",
+  "display": "fullscreen",
   "background_color": "#fff",
   "theme_color": "#fff",
   "icons": [
