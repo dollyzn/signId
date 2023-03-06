@@ -268,41 +268,27 @@ function enviarFormulario() {
 }
 
 $("#busca").on("click", function () {
+  const message = $(".tableSearch-message");
   $("#container").addClass("hide");
   $("#modalBuscar").removeClass("hide");
-});
 
-$("#btnCancelar").on("click", function () {
-  $("#modalBuscar").addClass("hide");
-  $("#container").removeClass("hide");
-  $(".tableSearch tbody").empty();
-  $("#searchInput").val("");
-});
+  $(".tableSearch .tbody").html(
+    "<tr class='tableSearchSkeleton'><td></td><td></td><td></td><td></td><td></td></tr><tr class='tableSearchSkeleton'><td></td><td></td><td></td><td></td><td></td></tr><tr class='tableSearchSkeleton'><td></td><td></td><td></td><td></td><td></td></tr><tr class='tableSearchSkeleton'><td></td><td></td><td></td><td></td><td></td></tr>"
+  );
 
-$("#searchInput").on("keyup", function (e) {
-  if (e.which === 13) {
-    e.preventDefault();
-    $(".tableSearch tbody").empty();
-    const searchTerm = $("#searchInput").val().trim();
-
-    var dados = `xworkId=${searchTerm}`;
-
+  setTimeout(function () {
     $.ajax({
-      url: "./php/search.php",
+      url: "./php/search_latest.php",
       type: "POST",
-      data: dados,
       success: function (resposta) {
         let resJSON = JSON.parse(resposta);
         if (resJSON.length === 0) {
-          Toastify({
-            text: "Nenhum resultado encontrado",
-            duration: 2000,
-            style: {
-              background: "#3250a8",
-            },
-          }).showToast();
+          message.show();
         } else {
-          const tbody = $(".tableSearch tbody");
+          message.hide();
+          $(".tableSearchSkeleton").remove();
+          const tbody = $(".tableSearch .tbody");
+
           $.each(resJSON, function (index, item) {
             let data = new Date(item.date + " UTC");
 
@@ -332,61 +318,213 @@ $("#searchInput").on("keyup", function (e) {
         console.error(erro);
       },
     });
+  }, 1000);
+});
+
+$("#btnCancelar").on("click", function () {
+  $("#modalBuscar").addClass("hide");
+  $("#container").removeClass("hide");
+  $(".tableSearch tbody").empty();
+  $("#searchInput").val("");
+});
+
+$("#searchInput").on("keyup", function (e) {
+  const message = $(".tableSearch-message");
+  message.hide();
+  if (e.which === 13) {
+    e.preventDefault();
+
+    const searchTerm = $("#searchInput").val().trim();
+
+    var dados = `xworkId=${searchTerm}`;
+
+    $(".tableSearch .tbody").html(
+      "<tr class='tableSearchSkeleton'><td></td><td></td><td></td><td></td><td></td></tr>"
+    );
+
+    setTimeout(function () {
+      $(".tableSearchSkeleton").remove();
+      $.ajax({
+        url: "./php/search.php",
+        type: "POST",
+        data: dados,
+        success: function (resposta) {
+          let resJSON = JSON.parse(resposta);
+          if (resJSON.length === 0) {
+            Toastify({
+              text: "Nenhum resultado encontrado",
+              duration: 2000,
+              style: {
+                background: "#3250a8",
+              },
+            }).showToast();
+            message.show();
+          } else {
+            message.hide();
+            const tbody = $(".tableSearch .tbody");
+            tbody.empty();
+            $.each(resJSON, function (index, item) {
+              let data = new Date(item.date + " UTC");
+
+              let day = data.getDate().toString().padStart(2, "0");
+              let month = (data.getMonth() + 1).toString().padStart(2, "0");
+              let year = data.getFullYear();
+              let hour = data.getHours().toString().padStart(2, "0");
+              let minute = data.getMinutes().toString().padStart(2, "0");
+
+              let formatedDate = `${day}/${month}/${year} às ${hour}:${minute}`;
+
+              const row = $("<tr>");
+              $("<td>").text(item.unit).appendTo(row);
+              $("<td>").text(item.xworkId).appendTo(row);
+              $("<td>").text(item.atendant).appendTo(row);
+              $("<td>").text(formatedDate).appendTo(row);
+              $("<td>")
+                .html(
+                  `<div data-href="${item.signature}" class="image-link" id="searchSignature" data-type="image/png">Visualizar</div>`
+                )
+                .appendTo(row);
+              row.appendTo(tbody);
+            });
+          }
+        },
+        error: function (erro) {
+          console.error(erro);
+        },
+      });
+    }, 1000);
   }
 });
 
 $("#btnProcurar").on("click", function (e) {
+  const message = $(".tableSearch-message");
   e.preventDefault();
-  $(".tableSearch tbody").empty();
+
   const searchTerm = $("#searchInput").val().trim();
 
   var dados = `xworkId=${searchTerm}`;
 
-  $.ajax({
-    url: "./php/search.php",
-    type: "POST",
-    data: dados,
-    success: function (resposta) {
-      let resJSON = JSON.parse(resposta);
-      if (resJSON.length === 0) {
-        Toastify({
-          text: "Nenhum resultado encontrado",
-          duration: 2000,
-          style: {
-            background: "#3250a8",
-          },
-        }).showToast();
-      } else {
-        const tbody = $(".tableSearch tbody");
-        $.each(resJSON, function (index, item) {
-          let data = new Date(item.date + " UTC");
+  $(".tableSearch .tbody").html(
+    "<tr class='tableSearchSkeleton'><td></td><td></td><td></td><td></td><td></td></tr>"
+  );
 
-          let day = data.getDate().toString().padStart(2, "0");
-          let month = (data.getMonth() + 1).toString().padStart(2, "0");
-          let year = data.getFullYear();
-          let hour = data.getHours().toString().padStart(2, "0");
-          let minute = data.getMinutes().toString().padStart(2, "0");
+  setTimeout(function () {
+    $(".tableSearchSkeleton").remove();
+    $.ajax({
+      url: "./php/search.php",
+      type: "POST",
+      data: dados,
+      success: function (resposta) {
+        let resJSON = JSON.parse(resposta);
+        if (resJSON.length === 0) {
+          Toastify({
+            text: "Nenhum resultado encontrado",
+            duration: 2000,
+            style: {
+              background: "#3250a8",
+            },
+          }).showToast();
+          message.show();
+        } else {
+          message.hide();
+          const tbody = $(".tableSearch .tbody");
+          tbody.empty();
+          $.each(resJSON, function (index, item) {
+            let data = new Date(item.date + " UTC");
 
-          let formatedDate = `${day}/${month}/${year} às ${hour}:${minute}`;
+            let day = data.getDate().toString().padStart(2, "0");
+            let month = (data.getMonth() + 1).toString().padStart(2, "0");
+            let year = data.getFullYear();
+            let hour = data.getHours().toString().padStart(2, "0");
+            let minute = data.getMinutes().toString().padStart(2, "0");
 
-          const row = $("<tr>");
-          $("<td>").text(item.unit).appendTo(row);
-          $("<td>").text(item.xworkId).appendTo(row);
-          $("<td>").text(item.atendant).appendTo(row);
-          $("<td>").text(formatedDate).appendTo(row);
-          $("<td>")
-            .html(
-              `<div data-href="${item.signature}" class="image-link" id="searchSignature" data-type="image/png">Visualizar</div>`
-            )
-            .appendTo(row);
-          row.appendTo(tbody);
-        });
-      }
-    },
-    error: function (erro) {
-      console.error(erro);
-    },
-  });
+            let formatedDate = `${day}/${month}/${year} às ${hour}:${minute}`;
+
+            const row = $("<tr>");
+            $("<td>").text(item.unit).appendTo(row);
+            $("<td>").text(item.xworkId).appendTo(row);
+            $("<td>").text(item.atendant).appendTo(row);
+            $("<td>").text(formatedDate).appendTo(row);
+            $("<td>")
+              .html(
+                `<div data-href="${item.signature}" class="image-link" id="searchSignature" data-type="image/png">Visualizar</div>`
+              )
+              .appendTo(row);
+            row.appendTo(tbody);
+          });
+        }
+      },
+      error: function (erro) {
+        console.error(erro);
+      },
+    });
+  }, 1000);
+});
+
+$("#searchInput").on("input", function (e) {
+  const message = $(".tableSearch-message");
+  message.hide();
+  e.preventDefault();
+
+  $(".tableSearch .tbody").html(
+    "<tr class='tableSearchSkeleton'><td></td><td></td><td></td><td></td><td></td></tr>"
+  );
+
+  setTimeout(
+    function () {
+      $(".tableSearchSkeleton").remove();
+      const searchTerm = $(this).val().trim();
+
+      var dados = `xworkId=${searchTerm}`;
+
+      $.ajax({
+        url: "./php/search.php",
+        type: "POST",
+        data: dados,
+        success: function (resposta) {
+          let resJSON = JSON.parse(resposta);
+
+          const tbody = $(".tableSearch .tbody");
+          tbody.empty();
+          if (resJSON.length === 0) {
+            message.show();
+          } else {
+            message.hide();
+            $.each(resJSON, function (index, item) {
+              let data = new Date(item.date + " UTC");
+
+              let day = data.getDate().toString().padStart(2, "0");
+              let month = (data.getMonth() + 1).toString().padStart(2, "0");
+              let year = data.getFullYear();
+              let hour = data.getHours().toString().padStart(2, "0");
+              let minute = data.getMinutes().toString().padStart(2, "0");
+
+              let formatedDate = `${day}/${month}/${year} às ${hour}:${minute}`;
+
+              const row = $("<tr>");
+              $("<td>").text(item.unit).appendTo(row);
+              $("<td>").text(item.xworkId).appendTo(row);
+              $("<td>").text(item.atendant).appendTo(row);
+              $("<td>").text(formatedDate).appendTo(row);
+              $("<td>")
+                .html(
+                  `<div data-href="${item.signature}" class="image-link" id="searchSignature" data-type="image/png">Visualizar</div>`
+                )
+                .appendTo(row);
+              row.appendTo(tbody);
+            });
+          }
+        },
+        error: function (erro) {
+          console.error(erro);
+          $(".tableSearch tbody").html(
+            "<tr><td colspan='5'>Erro ao carregar resultados.</td></tr>"
+          );
+        },
+      });
+    }.bind(this),
+    1000
+  );
 });
 
 $(".tableSearch").on("click", ".image-link", function (e) {

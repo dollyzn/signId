@@ -50,7 +50,7 @@
     </div>
     <body>
       <div id="modalBuscar">
-        <div class="table-container">
+        <div class="table-container search-container">
           <table class="tableSearch">
             <thead>
               <tr>
@@ -61,8 +61,27 @@
                 <th>Assinatura</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody class="tbody"></tbody>
+            <tbody class="tableSearchSkeleton">
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
           </table>
+          <div class="tableSearch-message" style="display: none">
+            <p>Nenhum resultado encontrado.</p>
+          </div>
         </div>
         <div>
           <div>
