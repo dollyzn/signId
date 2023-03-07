@@ -1,20 +1,16 @@
 var usersJSON = JSON.parse(users);
-var canvas = document.getElementById("canvas");
+var canvas = $("#canvas")[0];
 var ctx = canvas.getContext("2d");
 
-var clear = document.getElementById("clear");
+var clear = $("#clear");
 
-clear.addEventListener("click", (e) => {
+clear.on("click", function (e) {
   e.preventDefault();
   canvas.width = canvas.width;
 });
 
-canvas.width = document.body.clientWidth;
-canvas.heigth = 250;
-
-window.addEventListener("resize", function () {
-  canvas.width = document.body.clientWidth;
-});
+canvas.width = $("body").width() - 10;
+canvas.height = 180;
 
 const pen = {
   active: false,
@@ -30,23 +26,28 @@ const draw = (line) => {
   ctx.stroke();
 };
 
-canvas.addEventListener("mousedown", (e) => {
+$(canvas).on("mousedown", function (e) {
   pen.active = true;
 });
 
-canvas.addEventListener("mouseup", (e) => {
+$(canvas).on("mouseup", function (e) {
   pen.active = false;
   pen.previousPos = null;
 });
 
-canvas.addEventListener("mousemove", (e) => {
+$(canvas).on("mousemove", function (e) {
   const rect = canvas.getBoundingClientRect();
   pen.pos.x = e.clientX - rect.left;
   pen.pos.y = e.clientY - rect.top;
   pen.moving = true;
 });
 
-canvas.addEventListener("touchstart", (e) => {
+let onetouch;
+
+$(canvas).on("touchstart", function (e) {
+  if (e.touches.length == 1) {
+    onetouch = true;
+  }
   pen.active = true;
   const touch = e.touches[0];
   const rect = canvas.getBoundingClientRect();
@@ -54,8 +55,11 @@ canvas.addEventListener("touchstart", (e) => {
   pen.pos.y = touch.clientY - rect.top;
 });
 
-canvas.addEventListener("touchmove", (e) => {
+$(canvas).on("touchmove", function (e) {
   e.preventDefault();
+  if (e.touches.length == 1) {
+    onetouch = false;
+  }
   const touch = e.touches[0];
   const rect = canvas.getBoundingClientRect();
   pen.pos.x = touch.clientX - rect.left;
@@ -63,7 +67,12 @@ canvas.addEventListener("touchmove", (e) => {
   pen.moving = true;
 });
 
-canvas.addEventListener("touchend", (e) => {
+$(canvas).on("touchend", function (e) {
+  if (onetouch) {
+    ctx.beginPath();
+    ctx.arc(pen.pos.x, pen.pos.y, 2, 0, Math.PI * 2);
+    ctx.fill();
+  }
   pen.active = false;
   pen.previousPos = null;
 });
@@ -78,7 +87,7 @@ const animate = () => {
   }
 
   let base64 = canvas.toDataURL();
-  document.getElementById("signature").value = base64;
+  $("#signature").val(base64);
 
   requestAnimationFrame(animate);
 };
@@ -86,35 +95,66 @@ const animate = () => {
 animate();
 
 function populateSelect(data) {
-  var select = document.getElementById("options");
+  var select = $("#options");
 
   for (var i = 0; i < data.length; i++) {
-    var option = document.createElement("option");
-    option.value = data[i].name;
-    option.text = data[i].name;
-    select.add(option);
+    var option = $("<option>");
+    option.val(data[i].name);
+    option.text(data[i].name);
+    select.append(option);
   }
 }
-
 populateSelect(usersJSON);
 
 function checkOrientation() {
-  if (window.innerHeight > window.innerWidth) {
-    var control = document.getElementById("ortctrl");
-
-    var image = document.getElementById("rotateimg");
-    control.style.display = "none";
-    image.style.display = "block";
+  if (
+    screen.orientation.type.startsWith("portrait") ||
+    window.innerHeight > window.innerWidth
+  ) {
+    $("#ortctrl").hide();
+    $("#rotateimg").show();
   } else {
-    var control = document.getElementById("ortctrl");
-    var image = document.getElementById("rotateimg");
-    control.style.display = "block";
-    image.style.display = "none";
+    $("#ortctrl").show();
+    $("#rotateimg").hide();
+    if (
+      !document.fullscreenElement &&
+      !document.mozFullScreenElement &&
+      !document.webkitFullscreenElement &&
+      !document.msFullscreenElement
+    ) {
+      if (
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        )
+      ) {
+        Toastify({
+          text: "Habilite a tela cheia",
+          duration: 5000,
+          position: "center",
+          avatar: "images/icons/info.svg",
+          style: {
+            color: "#000",
+            background: "linear-gradient(to right, #FFC107, #FFEB3B)",
+          },
+        }).showToast();
+      }
+    } else {
+      screen.orientation
+        .lock("landscape")
+        .then(() => {
+          console.log("Orientação travada em paisagem");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   }
 }
 
-window.addEventListener("orientationchange", checkOrientation, false);
-window.addEventListener("resize", checkOrientation, false);
+$(window).on("orientationchange resize", function () {
+  checkOrientation();
+  canvas.width = $("body").width();
+});
 
 $(document).ready(function () {
   checkOrientation();
@@ -138,8 +178,7 @@ $(document).ready(function () {
       $("#container2").removeClass("hide");
 
       let date = new Date();
-      date.setHours(date.getHours() - 3);
-      $(".data").val(date.toISOString().substring(0, 16));
+      $(".data").val(moment(date).format("YYYY-MM-DDTHH:mm"));
     }
   });
 
@@ -150,8 +189,7 @@ $(document).ready(function () {
     $("#container2").removeClass("hide");
 
     let date = new Date();
-    date.setHours(date.getHours() - 3);
-    $(".data").val(date.toISOString().substring(0, 16));
+    $(".data").val(moment(date).format("YYYY-MM-DDTHH:mm"));
   });
 
   $("#rgt2").click(function () {
@@ -329,15 +367,9 @@ $("#busca").on("click", function () {
           const tbody = $(".tableSearch .tbody");
 
           $.each(resJSON, function (index, item) {
-            let data = new Date(item.date + " UTC");
-
-            let day = data.getDate().toString().padStart(2, "0");
-            let month = (data.getMonth() + 1).toString().padStart(2, "0");
-            let year = data.getFullYear();
-            let hour = data.getHours().toString().padStart(2, "0");
-            let minute = data.getMinutes().toString().padStart(2, "0");
-
-            let formatedDate = `${day}/${month}/${year} às ${hour}:${minute}`;
+            let formatedDate = moment(item.date).format(
+              "DD/MM/YYYY [às] HH:mm"
+            );
 
             const row = $("<tr>");
             $("<td>").text(item.unit).appendTo(row);
@@ -403,15 +435,9 @@ $("#searchInput").on("keyup", function (e) {
             const tbody = $(".tableSearch .tbody");
             tbody.empty();
             $.each(resJSON, function (index, item) {
-              let data = new Date(item.date + " UTC");
-
-              let day = data.getDate().toString().padStart(2, "0");
-              let month = (data.getMonth() + 1).toString().padStart(2, "0");
-              let year = data.getFullYear();
-              let hour = data.getHours().toString().padStart(2, "0");
-              let minute = data.getMinutes().toString().padStart(2, "0");
-
-              let formatedDate = `${day}/${month}/${year} às ${hour}:${minute}`;
+              let formatedDate = moment(item.date).format(
+                "DD/MM/YYYY [às] HH:mm"
+              );
 
               const row = $("<tr>");
               $("<td>").text(item.unit).appendTo(row);
@@ -470,15 +496,9 @@ $("#btnProcurar").on("click", function (e) {
           const tbody = $(".tableSearch .tbody");
           tbody.empty();
           $.each(resJSON, function (index, item) {
-            let data = new Date(item.date + " UTC");
-
-            let day = data.getDate().toString().padStart(2, "0");
-            let month = (data.getMonth() + 1).toString().padStart(2, "0");
-            let year = data.getFullYear();
-            let hour = data.getHours().toString().padStart(2, "0");
-            let minute = data.getMinutes().toString().padStart(2, "0");
-
-            let formatedDate = `${day}/${month}/${year} às ${hour}:${minute}`;
+            let formatedDate = moment(item.date).format(
+              "DD/MM/YYYY [às] HH:mm"
+            );
 
             const row = $("<tr>");
             $("<td>").text(item.unit).appendTo(row);
@@ -540,15 +560,9 @@ $("#searchInput").on("input", function (e) {
           } else {
             message.hide();
             $.each(resJSON, function (index, item) {
-              let data = new Date(item.date + " UTC");
-
-              let day = data.getDate().toString().padStart(2, "0");
-              let month = (data.getMonth() + 1).toString().padStart(2, "0");
-              let year = data.getFullYear();
-              let hour = data.getHours().toString().padStart(2, "0");
-              let minute = data.getMinutes().toString().padStart(2, "0");
-
-              let formatedDate = `${day}/${month}/${year} às ${hour}:${minute}`;
+              let formatedDate = moment(item.date).format(
+                "DD/MM/YYYY [às] HH:mm"
+              );
 
               const row = $("<tr>");
               $("<td>").text(item.unit).appendTo(row);
@@ -576,12 +590,53 @@ $("#searchInput").on("input", function (e) {
   );
 });
 
+$(".fullscreenbtn").on("click", function (e) {
+  var elem = document.documentElement;
+  if (
+    !document.fullscreenElement &&
+    !document.mozFullScreenElement &&
+    !document.webkitFullscreenElement &&
+    !document.msFullscreenElement
+  ) {
+    $(".full").hide();
+    $(".exitfull").show();
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+    }
+  } else {
+    $(".full").show();
+    $(".exitfull").hide();
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+});
+
 $(".tableSearch").on("click", ".image-link", function (e) {
   e.preventDefault();
 
-  const windowOptions = "height=300,width=1000,top=100,left=100";
   const base64image = $(this).data("href");
 
-  const newWindow = window.open("", "_blank", windowOptions);
-  newWindow.document.write(`<img src="${base64image}"/>`);
+  $("#modal-content").attr("src", base64image);
+
+  $("#image-modal").css("display", "flex");
+});
+
+$("#image-modal").on("click", function (e) {
+  if (e.target === this) {
+    $("#image-modal").hide();
+    $("#modal-content").attr("src", "");
+  }
 });

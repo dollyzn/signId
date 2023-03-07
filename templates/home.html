@@ -27,14 +27,45 @@
       href="vendor/toastify/toastify.min.css"
     />
   </head>
-  <img class="rotateimg" id="rotateimg" src="images/rotate.png" width="200px" />
-  <div id="ortctrl">
+  <img
+    class="rotateimg"
+    id="rotateimg"
+    src="images/rotate.png"
+    width="200px"
+    style="display: none"
+  />
+  <div id="ortctrl" style="display: none">
     <div class="header">
       <div class="logo">
         <img src="images/icons/logo.png" width="100px" draggable="false" />
       </div>
-      <a href="php/logout.php">
-        <div class="icon">
+      <div class="icon">
+        <a href="#" class="fullscreenbtn">
+          <svg
+            class="full"
+            xmlns="http://www.w3.org/2000/svg"
+            height="38"
+            viewBox="0 96 960 960"
+            width="38"
+          >
+            <path
+              d="M200 856V663h60v133h133v60H200Zm0-367V296h193v60H260v133h-60Zm367 367v-60h133V663h60v193H567Zm133-367V356H567v-60h193v193h-60Z"
+            />
+          </svg>
+          <svg
+            class="exitfull"
+            style="display: none"
+            xmlns="http://www.w3.org/2000/svg"
+            height="38"
+            viewBox="0 96 960 960"
+            width="38"
+          >
+            <path
+              d="M333 856V723H200v-60h193v193h-60Zm234 0V663h193v60H627v133h-60ZM200 489v-60h133V296h60v193H200Zm367 0V296h60v133h133v60H567Z"
+            />
+          </svg>
+        </a>
+        <a href="php/logout.php">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="35"
@@ -45,11 +76,15 @@
               d="M180 936q-24 0-42-18t-18-42V276q0-24 18-42t42-18h291v60H180v600h291v60H180Zm486-185-43-43 102-102H375v-60h348L621 444l43-43 176 176-174 174Z"
             />
           </svg>
-        </div>
-      </a>
+        </a>
+      </div>
     </div>
     <body>
-      <div id="modalBuscar">
+      <div id="modalBuscar" class="hide">
+        <div id="image-modal" class="modal" style="display: none">
+          <span class="close">&times;</span>
+          <img id="modal-content" src="" />
+        </div>
         <div class="table-container search-container">
           <table class="tableSearch">
             <thead>
@@ -115,7 +150,7 @@
         </div>
       </div>
       <form id="deliveredForm">
-        <div id="container1">
+        <div id="container1" class="hide">
           <div class="flexbox">
             <div class="arrowbtn" id="lft1">
               <svg
@@ -171,7 +206,7 @@
             </div>
           </div>
         </div>
-        <div id="container2">
+        <div id="container2" class="hide">
           <div class="flexbox">
             <div class="arrowbtn" id="lft2">
               <svg
@@ -211,7 +246,7 @@
             </div>
           </div>
         </div>
-        <div id="container3">
+        <div id="container3" class="hide">
           <div class="flexbox">
             <div class="arrowbtn" id="lft3">
               <svg
@@ -252,7 +287,7 @@
             </div>
           </div>
         </div>
-        <div id="container4">
+        <div id="container4" class="hide">
           <div class="flexboxcanva">
             <div>
               <canvas id="canvas"></canvas>
@@ -280,10 +315,8 @@
         users = `{{registros}}`;
       </script>
       <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-      <script
-        type="text/javascript"
-        src="vendor/toastify/toastify-js.js"
-      ></script>
+      <script src="vendor/toastify/toastify-js.js"></script>
+      <script src="vendor/moment/moment.min.js"></script>
       <script src="js/script.js"></script>
     </body>
   </div>
