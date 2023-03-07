@@ -221,6 +221,18 @@ $(document).ready(function () {
     const currentVal = $(".xwork").val();
     $(".xwork").val(currentVal.slice(0, -1));
   });
+
+  if (
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    )
+  ) {
+    $("#searchInput").prop("readonly", true);
+    $(".xwork").prop("readonly", true);
+  } else {
+    $("#searchInput").prop("readonly", false);
+    $(".xwork").prop("readonly", false);
+  }
 });
 
 $("#deliveredForm").on("submit", function (event) {
