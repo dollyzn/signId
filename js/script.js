@@ -196,6 +196,31 @@ $(document).ready(function () {
     ).addClass("hide");
     $("#container3").removeClass("hide");
   });
+
+  $(".tecbutton").click(function () {
+    const value = $(this).text();
+    $("#searchInput").val($("#searchInput").val() + value);
+    $("#searchInput").trigger("input");
+  });
+
+  $("#backspace").click(function () {
+    const value = $("#searchInput").val();
+    $("#searchInput").val(value.substring(0, value.length - 1));
+    $("#searchInput").trigger("input");
+  });
+
+  $(".xwrkbtn").on("click", function (e) {
+    e.preventDefault();
+    const num = $(this).text();
+    const currentVal = $(".xwork").val();
+    $(".xwork").val(currentVal + num);
+  });
+
+  $("#backspacexwrk").on("click", function (e) {
+    e.preventDefault();
+    const currentVal = $(".xwork").val();
+    $(".xwork").val(currentVal.slice(0, -1));
+  });
 });
 
 $("#deliveredForm").on("submit", function (event) {
@@ -269,11 +294,12 @@ function enviarFormulario() {
 
 $("#busca").on("click", function () {
   const message = $(".tableSearch-message");
+  message.hide();
   $("#container").addClass("hide");
   $("#modalBuscar").removeClass("hide");
 
   $(".tableSearch .tbody").html(
-    "<tr class='tableSearchSkeleton'><td></td><td></td><td></td><td></td><td></td></tr><tr class='tableSearchSkeleton'><td></td><td></td><td></td><td></td><td></td></tr><tr class='tableSearchSkeleton'><td></td><td></td><td></td><td></td><td></td></tr><tr class='tableSearchSkeleton'><td></td><td></td><td></td><td></td><td></td></tr>"
+    "<tr class='tableSearchSkeleton'><td></td><td></td><td></td><td></td><td></td></tr><tr class='tableSearchSkeleton'><td></td><td></td><td></td><td></td><td></td></tr><tr class='tableSearchSkeleton'><td></td><td></td><td></td><td></td><td></td></tr>"
   );
 
   setTimeout(function () {
@@ -283,6 +309,7 @@ $("#busca").on("click", function () {
       success: function (resposta) {
         let resJSON = JSON.parse(resposta);
         if (resJSON.length === 0) {
+          $(".tableSearchSkeleton").remove();
           message.show();
         } else {
           message.hide();
@@ -398,6 +425,7 @@ $("#searchInput").on("keyup", function (e) {
 
 $("#btnProcurar").on("click", function (e) {
   const message = $(".tableSearch-message");
+  message.hide();
   e.preventDefault();
 
   const searchTerm = $("#searchInput").val().trim();
@@ -461,6 +489,7 @@ $("#btnProcurar").on("click", function (e) {
   }, 1000);
 });
 
+let timer;
 $("#searchInput").on("input", function (e) {
   const message = $(".tableSearch-message");
   message.hide();
@@ -470,7 +499,8 @@ $("#searchInput").on("input", function (e) {
     "<tr class='tableSearchSkeleton'><td></td><td></td><td></td><td></td><td></td></tr>"
   );
 
-  setTimeout(
+  clearTimeout(timer);
+  timer = setTimeout(
     function () {
       $(".tableSearchSkeleton").remove();
       const searchTerm = $(this).val().trim();
@@ -487,6 +517,13 @@ $("#searchInput").on("input", function (e) {
           const tbody = $(".tableSearch .tbody");
           tbody.empty();
           if (resJSON.length === 0) {
+            Toastify({
+              text: "Nenhum resultado encontrado",
+              duration: 2000,
+              style: {
+                background: "#3250a8",
+              },
+            }).showToast();
             message.show();
           } else {
             message.hide();

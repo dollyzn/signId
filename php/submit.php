@@ -10,7 +10,7 @@ $count = $stmt->fetchColumn();
 if ($count > 0) {
   $response = array(
     'status' => false,
-    'message' => 'Já existe uma linha com o mesmo unit e xworkId na tabela'
+    'message' => 'Já existe uma assinatura cadastrada com mesmo número nesta unidade'
   );
 } else {
   $stmt = $conn->prepare('INSERT INTO delivered (unit, xworkId, date, atendant, signature) VALUES (:unit, :xworkId, :date, :atendant, :signature)');

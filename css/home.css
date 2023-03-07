@@ -193,7 +193,7 @@ html {
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 20px;
+  padding: 10px;
   background-color: #f5f5f5;
 }
 
@@ -219,7 +219,7 @@ html {
 }
 
 #searchInput {
-  width: 99%;
+  width: 98%;
   border: none;
   padding: 15px;
   border-radius: 10px;
@@ -231,6 +231,7 @@ html {
 }
 
 #btnProcurar {
+  margin-top: 15px;
   color: #ffffff;
   background-color: #004ea8;
   border: none;
@@ -241,6 +242,7 @@ html {
   height: 25px;
 }
 #btnCancelar {
+  margin-top: 15px;
   color: #ffffff;
   background-color: #777d85;
   border: none;
@@ -253,8 +255,8 @@ html {
 
 .image-link {
   display: inline-block;
-  color: blue;
-  text-decoration: underline;
+  color: rgb(87, 168, 243);
+  text-decoration: none;
   cursor: pointer;
 }
 
@@ -288,6 +290,94 @@ html {
 
 .tableSearch-message p {
   text-align: center;
+}
+
+.tecbutton {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  margin: 1px;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+.tecbutton:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.tecbutton:focus {
+  outline: none;
+  box-shadow: 0 0 5px #ccc;
+}
+
+.tecXwrk {
+  margin: -20px 0 0 20px;
+}
+
+.xwrkbtn {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  margin: 1px;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+.xwrkbtn:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.xwrkbtn:focus {
+  outline: none;
+  box-shadow: 0 0 5px #ccc;
+}
+
+#backspacexwrk {
+  width: 66px;
+  height: 30px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  margin: 1px;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+#backspacexwrk:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+
+#backspacexwrk:focus {
+  outline: none;
+  box-shadow: 0 0 5px #ccc;
+}
+
+#backspace {
+  width: 66px;
+  height: 30px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  margin: 1px;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+#backspace:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+
+#backspace:focus {
+  outline: none;
+  box-shadow: 0 0 5px #ccc;
 }
 
 @keyframes pulse {
