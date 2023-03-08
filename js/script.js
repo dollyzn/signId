@@ -2,97 +2,15 @@ var usersJSON = JSON.parse(users);
 var canvas = $("#canvas")[0];
 var ctx = canvas.getContext("2d");
 
-var clear = $("#clear");
-
-clear.on("click", function (e) {
-  e.preventDefault();
-  canvas.width = canvas.width;
-});
+const signaturePad = new SignaturePad(canvas);
 
 canvas.width = $("body").width() - 10;
 canvas.height = 180;
 
-const pen = {
-  active: false,
-  moving: false,
-  pos: { x: 0, y: 0 },
-  previousPos: null,
-};
-
-const draw = (line) => {
-  ctx.beginPath();
-  ctx.moveTo(line.previousPos.x, line.previousPos.y);
-  ctx.lineTo(line.pos.x, line.pos.y);
-  ctx.stroke();
-};
-
-$(canvas).on("mousedown", function (e) {
-  pen.active = true;
-});
-
-$(canvas).on("mouseup", function (e) {
-  pen.active = false;
-  pen.previousPos = null;
-});
-
-$(canvas).on("mousemove", function (e) {
-  const rect = canvas.getBoundingClientRect();
-  pen.pos.x = e.clientX - rect.left;
-  pen.pos.y = e.clientY - rect.top;
-  pen.moving = true;
-});
-
-let onetouch;
-
-$(canvas).on("touchstart", function (e) {
-  if (e.touches.length == 1) {
-    onetouch = true;
-  }
-  pen.active = true;
-  const touch = e.touches[0];
-  const rect = canvas.getBoundingClientRect();
-  pen.pos.x = touch.clientX - rect.left;
-  pen.pos.y = touch.clientY - rect.top;
-});
-
-$(canvas).on("touchmove", function (e) {
+$("#clear").on("click", function (e) {
   e.preventDefault();
-  if (e.touches.length == 1) {
-    onetouch = false;
-  }
-  const touch = e.touches[0];
-  const rect = canvas.getBoundingClientRect();
-  pen.pos.x = touch.clientX - rect.left;
-  pen.pos.y = touch.clientY - rect.top;
-  pen.moving = true;
+  signaturePad.clear();
 });
-
-$(canvas).on("touchend", function (e) {
-  if (onetouch) {
-    ctx.beginPath();
-    ctx.arc(pen.pos.x, pen.pos.y, 2, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  pen.active = false;
-  pen.previousPos = null;
-});
-
-const animate = () => {
-  if (pen.active && pen.moving && pen.previousPos) {
-    draw({ pos: pen.pos, previousPos: pen.previousPos });
-    pen.moving = false;
-  }
-  if (pen.active) {
-    pen.previousPos = { x: pen.pos.x, y: pen.pos.y };
-  }
-
-  let base64 = canvas.toDataURL();
-  $("#signature").val(base64);
-
-  requestAnimationFrame(animate);
-};
-
-animate();
 
 function populateSelect(data) {
   var select = $("#options");
@@ -128,13 +46,46 @@ function checkOrientation() {
         )
       ) {
         Toastify({
-          text: "Habilite a tela cheia",
+          text: "Habilite a tela cheia! Clique aqui",
           duration: 5000,
           position: "center",
           avatar: "images/icons/info.svg",
           style: {
             color: "#000",
             background: "linear-gradient(to right, #FFC107, #FFEB3B)",
+          },
+          onClick: function () {
+            var elem = document.documentElement;
+            if (
+              !document.fullscreenElement &&
+              !document.mozFullScreenElement &&
+              !document.webkitFullscreenElement &&
+              !document.msFullscreenElement
+            ) {
+              $(".full").hide();
+              $(".exitfull").show();
+              if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+              } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+              } else if (elem.mozRequestFullScreen) {
+                elem.mozRequestFullScreen();
+              } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+              }
+            } else {
+              $(".full").show();
+              $(".exitfull").hide();
+              if (document.exitFullscreen) {
+                document.exitFullscreen();
+              } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+              } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+              } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+              }
+            }
           },
         }).showToast();
       }
@@ -153,6 +104,9 @@ function checkOrientation() {
 
 $(window).on("orientationchange resize", function () {
   checkOrientation();
+});
+
+$(window).on("resize", function () {
   canvas.width = $("body").width();
 });
 
@@ -275,9 +229,14 @@ $(document).ready(function () {
 
 $("#deliveredForm").on("submit", function (event) {
   event.preventDefault();
+
+  let base64 = signaturePad.toDataURL();
+  $("#signature").val(base64);
+
   const inputs = $(this).find("[jsrequired]");
   let valid = true;
   let names = "";
+
   inputs.each(function () {
     if ($(this).val().trim() === "") {
       if ($(this).attr("data-nome") != undefined) {
@@ -321,7 +280,8 @@ function enviarFormulario() {
 
           $("#container4").addClass("hide");
           $("#container").removeClass("hide");
-          document.getElementById("deliveredForm").reset();
+          $("#deliveredForm")[0].reset();
+          $("#signature").val("");
           canvas.width = canvas.width;
 
           break;
