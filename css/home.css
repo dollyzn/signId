@@ -95,13 +95,19 @@ html {
 
 .arrowbtn {
   background-color: #b1b1b1e3;
-  border: 1px solid black;
+  border: none;
   border-radius: 10px;
   height: 50%;
   margin-right: 30px;
   margin-left: 30px;
   display: flex;
   align-items: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.arrowbtn:active {
+  transform: scale(0.97);
+  box-shadow: 0px 0px 10px #b1b1b1;
 }
 
 .leftbtn {
