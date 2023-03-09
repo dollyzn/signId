@@ -600,3 +600,18 @@ $("#image-modal").on("click", function (e) {
     $("#modal-content").attr("src", "");
   }
 });
+
+$(document).on("keydown keypress", function (event) {
+  if (event.keyCode === 9) {
+    event.preventDefault();
+    $(".data").blur();
+  }
+});
+
+$(".data").click(function (e) {
+  e.preventDefault();
+});
+
+$(".data").on("focus", function (event) {
+  $(this).blur();
+});
