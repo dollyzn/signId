@@ -232,6 +232,7 @@ iframe {
 .login100-form-title {
   display: block;
   font-family: Poppins-Bold;
+  padding-bottom: 26px;
   font-size: 30px;
   color: #333333;
   line-height: 1.2;
