@@ -10,12 +10,12 @@ if (isset($_SESSION['unitname'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $stmt = $conn->prepare("SELECT * FROM units WHERE unitname=:unitname AND password = SHA2(:password, 256)");
+    $stmt = $conn->prepare("SELECT * FROM units WHERE BINARY unitname=:unitname AND password = SHA2(:password, 256)");
     $unitname = $_POST['unitname'];
     $password = $_POST['password'];
     $stmt->bindParam(':unitname', $unitname);
     $stmt->bindParam(':password', $password);
-
+    
     $stmt->execute();
 
     if ($stmt->rowCount() === 1) {
