@@ -106,8 +106,16 @@ $(window).on("orientationchange resize", function () {
   checkOrientation();
 });
 
+let windowWidth = window.innerWidth;
+let windowHeight = window.innerHeight;
+
 $(window).on("resize", function () {
-  canvas.width = $("body").width();
+  if (window.innerWidth == windowHeight && window.innerHeight == windowWidth) {
+    windowWidth = window.innerWidth;
+    windowHeight = window.innerHeight;
+  } else {
+    canvas.width = $("body").width();
+  }
 });
 
 $(document).ready(function () {
