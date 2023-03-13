@@ -24,6 +24,8 @@ function populateSelect(data) {
 }
 populateSelect(usersJSON);
 
+let toastShown = false;
+
 function checkOrientation() {
   if (
     screen.orientation.type.startsWith("portrait") ||
@@ -45,51 +47,32 @@ function checkOrientation() {
           navigator.userAgent
         )
       ) {
-        Toastify({
-          text: "Habilite a tela cheia! Clique aqui",
-          duration: 5000,
-          position: "center",
-          avatar: "images/icons/info.svg",
-          style: {
-            color: "#000",
-            background: "linear-gradient(to right, #FFC107, #FFEB3B)",
-          },
-          onClick: function () {
-            var elem = document.documentElement;
-            if (
-              !document.fullscreenElement &&
-              !document.mozFullScreenElement &&
-              !document.webkitFullscreenElement &&
-              !document.msFullscreenElement
-            ) {
-              $(".full").hide();
-              $(".exitfull").show();
-              if (elem.requestFullscreen) {
-                elem.requestFullscreen();
-              } else if (elem.msRequestFullscreen) {
-                elem.msRequestFullscreen();
-              } else if (elem.mozRequestFullScreen) {
-                elem.mozRequestFullScreen();
-              } else if (elem.webkitRequestFullscreen) {
-                elem.webkitRequestFullscreen();
-              }
-            } else {
-              $(".full").show();
-              $(".exitfull").hide();
-              if (document.exitFullscreen) {
-                document.exitFullscreen();
-              } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
-              } else if (document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-              } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-              }
-            }
-          },
-        }).showToast();
+        $("#submitcanva").prop("disabled", true);
+        $("#entrega").prop("disabled", true);
+
+        if (!toastShown) {
+          Toastify({
+            text: "Habilite a tela cheia! Clique aqui",
+            duration: 5000,
+            position: "center",
+            avatar: "images/icons/info.svg",
+            style: {
+              color: "#000",
+              background: "linear-gradient(to right, #FFC107, #FFEB3B)",
+            },
+            onClick: function () {
+              fullscreen();
+            },
+          }).showToast();
+        }
+        toastShown = true;
+        setTimeout(() => {
+          toastShown = false;
+        }, 5000);
       }
     } else {
+      $("#submitcanva").prop("disabled", false);
+      $("#entrega").prop("disabled", false);
       screen.orientation
         .lock("landscape")
         .then(() => {
@@ -106,16 +89,8 @@ $(window).on("orientationchange resize", function () {
   checkOrientation();
 });
 
-let windowWidth = window.innerWidth;
-let windowHeight = window.innerHeight;
-
 $(window).on("resize", function () {
-  if (window.innerWidth == windowHeight && window.innerHeight == windowWidth) {
-    windowWidth = window.innerWidth;
-    windowHeight = window.innerHeight;
-  } else {
-    canvas.width = $("body").width();
-  }
+  canvas.width = $("body").width();
 });
 
 $(document).ready(function () {
@@ -559,6 +534,10 @@ $("#searchInput").on("input", function (e) {
 });
 
 $(".fullscreenbtn").on("click", function (e) {
+  fullscreen();
+});
+
+function fullscreen() {
   var elem = document.documentElement;
   if (
     !document.fullscreenElement &&
@@ -568,6 +547,16 @@ $(".fullscreenbtn").on("click", function (e) {
   ) {
     $(".full").hide();
     $(".exitfull").show();
+
+    if (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    ) {
+      $("#submitcanva").prop("disabled", false);
+      $("#entrega").prop("disabled", false);
+    }
+
     if (elem.requestFullscreen) {
       elem.requestFullscreen();
     } else if (elem.msRequestFullscreen) {
@@ -580,6 +569,16 @@ $(".fullscreenbtn").on("click", function (e) {
   } else {
     $(".full").show();
     $(".exitfull").hide();
+
+    if (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    ) {
+      $("#submitcanva").prop("disabled", true);
+      $("#entrega").prop("disabled", true);
+    }
+
     if (document.exitFullscreen) {
       document.exitFullscreen();
     } else if (document.msExitFullscreen) {
@@ -590,7 +589,7 @@ $(".fullscreenbtn").on("click", function (e) {
       document.webkitExitFullscreen();
     }
   }
-});
+}
 
 $(".tableSearch").on("click", ".image-link", function (e) {
   e.preventDefault();

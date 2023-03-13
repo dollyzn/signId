@@ -130,6 +130,11 @@ html {
   height: 100px;
 }
 
+.buttoninit:disabled {
+  background-color: #8d3031c9;
+  color: #fafafa96;
+}
+
 #canvas {
   margin-top: 10px;
   border: 2px solid black;
@@ -158,6 +163,11 @@ html {
   border-radius: 100px;
   width: 200px;
   height: 50px;
+}
+
+#submitcanva:disabled {
+  background-color: #75bdaf9f;
+  color: #6363637c;
 }
 
 #clear {
