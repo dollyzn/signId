@@ -1,7 +1,10 @@
 <?php
 
-session_set_cookie_params(18000);
+$lifetime=18000;
+
 session_start();
+
+setcookie(session_name(),session_id(),time()+$lifetime);
 
 if (isset($_SESSION['unitname'])) {
     header('Location: home.php');
