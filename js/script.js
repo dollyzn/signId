@@ -229,7 +229,7 @@ $("#deliveredForm").on("submit", function (event) {
     }
   });
   if (valid) {
-    event.preventDefault;
+    $("#submitcanva").prop("disabled", true);
     enviarFormulario();
   } else {
     names = names.replace(/,\s*$/, "");
@@ -265,8 +265,8 @@ function enviarFormulario() {
           $("#container").removeClass("hide");
           $("#deliveredForm")[0].reset();
           $("#signature").val("");
-          canvas.width = canvas.width;
-
+          signaturePad.clear();
+          $("#submitcanva").prop("disabled", false);
           break;
         case false:
           Toastify({
